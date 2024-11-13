@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bar Animation</title>
+    <style>
+      body {
+        background-color: #f0f0f0; /* Light background */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .bar-container {
+        display: flex;
+        align-items: flex-end;
+        height: 200px;
+        width: 500px; /* Wider container */
+        margin-bottom: 20px;
+        border: 5px solid #000; /* Black border */
+        border-radius: 10px; /* Rounded corners */
+        overflow: hidden; /* Prevents overflow */
+        background-color: #000;
+      }
+
+      .bar {
+        width: 100px; /* Wider bars */
+        margin: 0 2px; /* Adjusted margin */
+        transition: height 0.5s ease-in-out; /* Only height transition */
+        background-color: #000; /* Default to black until updated */
+      }
+
+      /* Color classes for each bar */
+      .bar1 {
+        background-color: #6a1b9a;
+      } /* Dark purple */
+      .bar2 {
+        background-color: #d81b60;
+      } /* Pink */
+      .bar3 {
+        background-color: #ff5722;
+      } /* Orange */
+      .bar4 {
+        background-color: #ffeb3b;
+      } /* Yellow */
+      .bar5 {
+        background-color: #43a047;
+      } /* Green */
+
+      .controls {
+        display: flex;
+        gap: 15px; /* Larger gap for buttons */
+        margin-top: 20px; /* Space above buttons */
+      }
+
+      button {
+        padding: 10px 30px; /* Padding for buttons */
+        border: none;
+        border-radius: 5px; /* Rounded button corners */
+        cursor: pointer;
+        font-size: 16px; /* Larger text */
+      }
+      #start {
+        background-color: #388e3c;
+        color: #fff;
+      } /* Dark green */
+      #reset {
+        background-color: #8e24aa;
+        color: #fff;
+      } /* Purple */
+      #stop {
+        background-color: #d32f2f;
+        color: #fff;
+      } /* Dark red */
+    </style>
+  </head>
+  <body>
+    <div class="bar-container">
+      <div class="bar bar1"></div>
+      <div class="bar bar2"></div>
+      <div class="bar bar3"></div>
+      <div class="bar bar4"></div>
+      <div class="bar bar5"></div>
+    </div>
+
+    <div class="controls">
+      <button id="start">Start</button>
+      <button id="reset">Reset</button>
+      <button id="stop">Stop</button>
+    </div>
+
+    <script>
+      let animationInterval;
+      const bars = document.querySelectorAll(".bar");
+
+      function startAnimation() {
+        if (animationInterval) {
+          clearInterval(animationInterval);
+        }
+
+        animationInterval = setInterval(() => {
+          updateBars();
+        }, 1000); // Update every second
+      }
+
+      function updateBars() {
+        bars.forEach((bar) => {
+          const randomHeight = Math.floor(Math.random() * 201); // Random height between 50 and 200
+          bar.style.height = randomHeight + "px";
+        });
+      }
+
+      function stopAnimation() {
+        clearInterval(animationInterval); // Stop the animation
+      }
+
+      function resetAnimation() {
+        stopAnimation();
+        bars.forEach((bar) => {
+          bar.style.height = "200px"; // Reset heights to 0
+        });
+      }
+
+      // Event listeners for buttons
+      document
+        .getElementById("start")
+        .addEventListener("click", startAnimation);
+      document.getElementById("stop").addEventListener("click", stopAnimation);
+      document
+        .getElementById("reset")
+        .addEventListener("click", resetAnimation);
+    </script>
+  </body>
+</html>
